@@ -1,0 +1,37 @@
+<div class="container">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>View Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{product.productName}}</td>
+                <td>{{product.quantity}}</td>
+                <td>{{(product.price - product.cartOfferPrice) * product.quantity}}</td>
+                <td><button class="btn btn-secondary" (click)="selectProduct(product)">View Details</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <form *ngIf="selectedProduct">
+        <div class="row">
+            <div class="col-6">
+                {{selectedProduct.category}}
+            </div>
+            <div class="col-6">
+                <p><b>Product Name : </b><span>{{selectedProduct.productName}}</span></p>
+                <p><b>Quantity : </b><span>{{selectedProduct.quantity}}</span></p>
+                <p><b>Price : </b><span>{{selectedProduct.price}}</span></p>
+                <p><b>Discount : </b><span>{{(selectedProduct.price-(selectedProduct.price - selectedProduct.cartOfferPrice)) / selectedProduct.price | percent}}</span></p>
+                <p><b>Total : </b><span>{{(selectedProduct.price - selectedProduct.cartOfferPrice) * selectedProduct.quantity}}</span></p>
+            </div>
+        </div>
+        <input type="number" class="form-control" name="offerPrice" [(ngModel)]="offerPrice" />
+        <button class="btn btn-primary" (click)="changeOfferPrice()">Give Offer</button>
+        <span class="text-success" *ngIf="successMessage">{{successMessage}}</span>
+    </form>
+</div>
